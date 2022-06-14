@@ -1,5 +1,6 @@
 package com.mcm.sp;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,10 @@ public class SistemaDePedidoApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(cl1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/01/2022 10:32"), pagamenmto, cliente, enderecoDeEntrega)
 	}
 
 }
