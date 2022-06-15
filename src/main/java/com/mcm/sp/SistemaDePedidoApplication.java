@@ -13,6 +13,7 @@ import com.mcm.sp.entities.Cidade;
 import com.mcm.sp.entities.Cliente;
 import com.mcm.sp.entities.Endereco;
 import com.mcm.sp.entities.Estado;
+import com.mcm.sp.entities.ItemPedido;
 import com.mcm.sp.entities.Pagamento;
 import com.mcm.sp.entities.PagamentoComBoleto;
 import com.mcm.sp.entities.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mcm.sp.repositories.CidadeRepository;
 import com.mcm.sp.repositories.ClienteRepository;
 import com.mcm.sp.repositories.EnderecoRepository;
 import com.mcm.sp.repositories.EstadoRepository;
+import com.mcm.sp.repositories.ItemPedidoRepository;
 import com.mcm.sp.repositories.PagamentoRepository;
 import com.mcm.sp.repositories.PedidoRepository;
 import com.mcm.sp.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class SistemaDePedidoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -122,6 +127,19 @@ public class SistemaDePedidoApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped1));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
+		ItemPedido ip1 = new ItemPedido (ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido (ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido (ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped1.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
