@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mcm.sp.entities.Categoria;
-import com.mcm.sp.services.CategoriaService;
+import com.mcm.sp.entities.Pedido;
+import com.mcm.sp.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaController {
+@RequestMapping(value = "/pedidos")
+public class PedidoController {
 	
 	@Autowired
-	private CategoriaService categoriaService;
+	private PedidoService pedidoService;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Long id){ 			
-		Categoria obj = categoriaService.findById(id);				
+	public ResponseEntity<Pedido> findById(@PathVariable Long id){ 			
+		Pedido obj = pedidoService.findById(id);				
 		return ResponseEntity.ok().body(obj);
 	}
 }
