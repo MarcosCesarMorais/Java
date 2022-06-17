@@ -17,6 +17,10 @@ public class CategoriaService {
 	public Categoria findById (Long id) {
 		return categoriaRepository.findById(id).orElseThrow(
 				() -> new EntityNotFoundException("Categoria não encontrada " + id));         
+	}
+
+	public Categoria insert(Categoria categoria) {
+		return categoriaRepository.save(categoria);
 	} 
 
 }
