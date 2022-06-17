@@ -1,12 +1,12 @@
 package com.mcm.sp.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +23,12 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 	
+	@GetMapping(value = "/")
+	public ResponseEntity<List<Categoria>> findAll(){ 			
+		List <Categoria> categorias = categoriaService.findAll();				
+		return ResponseEntity.ok().body(categorias);
+	}	
+	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> findById(@PathVariable Long id){ 			
 		Categoria obj = categoriaService.findById(id);				
@@ -37,4 +43,10 @@ public class CategoriaController {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Categoria> update(@RequestBody Categoria categoria, @PathVariable Long id){
+		categoria.setId(id);
+		categoria = categoriaService.update(categoria);
+		return ResponseEntity.noContent().build();
+	}
 }
