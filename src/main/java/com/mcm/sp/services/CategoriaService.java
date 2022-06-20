@@ -2,6 +2,7 @@ package com.mcm.sp.services;
 
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.mcm.sp.dto.CategoriaDTO;
 import com.mcm.sp.entities.Categoria;
 import com.mcm.sp.repositories.CategoriaRepository;
 
@@ -54,4 +56,10 @@ public class CategoriaService {
 			throw new DataIntegrityViolationException("Não é possivel excluir uma categoria que possui produtos cadastrados");
 		}
 	}
+	
+	public Categoria fromDTO(@Valid CategoriaDTO categoriaDTO) {
+		return new Categoria (categoriaDTO.getId(), categoriaDTO.getNome());
+	}
+
+	
 }
