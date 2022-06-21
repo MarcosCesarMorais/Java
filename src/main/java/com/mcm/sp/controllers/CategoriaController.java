@@ -35,6 +35,7 @@ public class CategoriaController {
 		List<CategoriaDTO> categoriasDTO = categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(categoriasDTO);
 	}
+	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,

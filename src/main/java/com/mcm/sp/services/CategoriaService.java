@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.mcm.sp.dto.CategoriaDTO;
 import com.mcm.sp.entities.Categoria;
+import com.mcm.sp.entities.Cliente;
 import com.mcm.sp.repositories.CategoriaRepository;
 
 @Service
@@ -42,18 +43,23 @@ public class CategoriaService {
 	} 
 	
 	public Categoria update(Categoria categoria) {
-		findById(categoria.getId());
-		return categoriaRepository.save(categoria);
-		
+		Categoria categoriaExiste = findById(categoria.getId());
+		updateCliente(categoriaExiste, categoria);
+		return categoriaRepository.save(categoriaExiste);		
 	}
+	
+	private void updateCliente(Categoria categoriaExiste, Categoria categoria) {
+		categoriaExiste.setNome(categoria.getNome());		
+	}
+
 	
 	public void delete(Long id) {
 		findById(id);
 		try {
 			categoriaRepository.deleteById(id);
 		}
-		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possivel excluir uma categoria que possui produtos cadastrados");
+		catch (Exception  e) {
+			throw new DataIntegrityViolationException("Erro ao processar");
 		}
 	}
 	
