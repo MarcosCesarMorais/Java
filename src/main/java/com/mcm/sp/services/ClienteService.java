@@ -11,16 +11,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mcm.sp.dto.ClienteDTO;
 import com.mcm.sp.entities.Cliente;
 import com.mcm.sp.repositories.ClienteRepository;
+import com.mcm.sp.repositories.EnderecoRepository;
 
 @Service
 public class ClienteService {
 		
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public Cliente findById (Long id) {
 		return clienteRepository.findById(id).orElseThrow(
@@ -37,9 +42,12 @@ public class ClienteService {
 		return clienteRepository.findAll(pageRequest);
 	}
 	
+	@Transactional
 	public Cliente insert(Cliente cliente) {
 		cliente.setId(null);
-		return clienteRepository.save(cliente);
+		cliente = clienteRepository.save(cliente);
+		enderecoRepository.saveAll(cliente.getEnderecos());
+		return cliente;
 	} 
 	
 	public Cliente update(Cliente cliente) {

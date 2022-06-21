@@ -1,6 +1,7 @@
 package com.mcm.sp.services;
 
 import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.mcm.sp.dto.CategoriaDTO;
 import com.mcm.sp.entities.Categoria;
-import com.mcm.sp.entities.Cliente;
 import com.mcm.sp.repositories.CategoriaRepository;
 
 @Service
