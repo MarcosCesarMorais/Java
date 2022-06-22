@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mcm.sp.dto.ClienteDTO;
+import com.mcm.sp.dto.ClienteNewDTO;
 import com.mcm.sp.entities.Cliente;
 import com.mcm.sp.services.ClienteService;
 
@@ -53,8 +54,8 @@ public class ClienteController {
 		return ResponseEntity.ok().body(clientesDTO);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public ResponseEntity<Cliente> insert (@Valid @RequestBody ClienteDTO clienteDTO){
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Cliente> insert (@Valid @RequestBody ClienteNewDTO clienteDTO){
 		Cliente cliente = clienteservice.fromDTO(clienteDTO);
 		cliente = clienteservice.insert(cliente);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

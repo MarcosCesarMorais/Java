@@ -14,7 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mcm.sp.dto.ClienteDTO;
+import com.mcm.sp.dto.ClienteNewDTO;
+import com.mcm.sp.entities.Cidade;
 import com.mcm.sp.entities.Cliente;
+import com.mcm.sp.entities.Endereco;
+import com.mcm.sp.entities.enums.TipoCliente;
 import com.mcm.sp.repositories.ClienteRepository;
 import com.mcm.sp.repositories.EnderecoRepository;
 
@@ -26,7 +30,7 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	public Cliente findById (Long id) {
 		return clienteRepository.findById(id).orElseThrow(
 				() -> new EntityNotFoundException("Cliente não encontrado " + id));         
@@ -42,7 +46,6 @@ public class ClienteService {
 		return clienteRepository.findAll(pageRequest);
 	}
 	
-	@Transactional
 	public Cliente insert(Cliente cliente) {
 		cliente.setId(null);
 		cliente = clienteRepository.save(cliente);
@@ -75,5 +78,21 @@ public class ClienteService {
 	public Cliente fromDTO(@Valid ClienteDTO clienteDTO) {
 		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(),clienteDTO.getEmail(), null, null);
 
+	}
+	
+	public Cliente fromDTO(ClienteNewDTO clienteDTO) {
+		Cliente cli = new Cliente(null, clienteDTO.getNome(), clienteDTO.getEmail(), clienteDTO.getCpfOuCnpj(), TipoCliente.toEnum(clienteDTO.getTipo()));
+		Cidade cid = new Cidade(clienteDTO.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, clienteDTO.getLogradouro(), clienteDTO.getNumero(), clienteDTO.getComplemento(), clienteDTO.getBairro(), clienteDTO.getCep(),cli, cid);
+				
+		cli.getEnderecos().add(end);
+		cli.getTelefones().add(clienteDTO.getTelefone1());
+		if (clienteDTO.getTelefone2()!=null) {
+			cli.getTelefones().add(clienteDTO.getTelefone2());
+		}
+		if (clienteDTO.getTelefone3()!=null) {
+			cli.getTelefones().add(clienteDTO.getTelefone3());
+		}
+		return cli;
 	}
 }
