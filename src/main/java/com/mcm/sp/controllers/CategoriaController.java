@@ -48,7 +48,7 @@ public class CategoriaController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Long id){ 			
+	public ResponseEntity<Categoria> findById(@PathVariable Integer id){ 			
 		Categoria obj = categoriaService.findById(id);				
 		return ResponseEntity.ok().body(obj);
 	}
@@ -63,7 +63,7 @@ public class CategoriaController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Categoria> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Long id){
+	public ResponseEntity<Categoria> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id){
 		Categoria categoria = categoriaService.fromDTO(categoriaDTO);
 		categoria.setId(id);
 		categoria = categoriaService.update(categoria);
@@ -71,7 +71,7 @@ public class CategoriaController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void Delete(@PathVariable Long id){ 
+	public void Delete(@PathVariable Integer id){ 
 		categoriaService.delete(id);
 	}	
 }

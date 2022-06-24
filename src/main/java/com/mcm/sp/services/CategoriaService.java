@@ -32,7 +32,7 @@ public class CategoriaService {
 		return categoriaRepository.findAll(pageRequest);
 	}
 	
-	public Categoria findById (Long id) {
+	public Categoria findById (Integer id) {
 		return categoriaRepository.findById(id).orElseThrow(
 				() -> new EntityNotFoundException("Categoria não encontrada " + id));         
 	}
@@ -53,7 +53,7 @@ public class CategoriaService {
 	}
 
 	
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		findById(id);
 		try {
 			categoriaRepository.deleteById(id);
